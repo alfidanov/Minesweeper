@@ -1,0 +1,1 @@
+export const Positions = ['TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight'];

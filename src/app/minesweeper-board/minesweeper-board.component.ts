@@ -24,6 +24,7 @@ export class MinesweeperBoardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.engine.startGame('Junior');
   }
 
   public changeDifficulty(difficulty: GameDifficulty) {

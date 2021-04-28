@@ -1,7 +1,23 @@
 <div *ngIf="this.tile">
-    <span *ngIf="this.tile.isFlagged">F</span>
+    <img src="/assets/flag.png" *ngIf="this.tile.isFlagged" class="tile-image">
 
-    <div *ngIf="this.tile.isRevealed">
-        <span *ngIf="this.tile.isBomb">B</span>
-    </div>
+    <img src="/assets/unopened.png" *ngIf="!this.tile.isRevealed && !this.tile.isFlagged" class="tile-image">
+
+    <ng-container *ngIf="this.tile.isRevealed">
+
+        <ng-container *ngIf="!this.isBomb">
+            <img src="/assets/1.png" *ngIf="this.tile.adjacentBombsCount === 1" class="tile-image">
+            <img src="/assets/2.png" *ngIf="this.tile.adjacentBombsCount === 2" class="tile-image">
+            <img src="/assets/3.png" *ngIf="this.tile.adjacentBombsCount === 3" class="tile-image">
+            <img src="/assets/4.png" *ngIf="this.tile.adjacentBombsCount === 4" class="tile-image">
+            <img src="/assets/5.png" *ngIf="this.tile.adjacentBombsCount === 5" class="tile-image">
+            <img src="/assets/6.png" *ngIf="this.tile.adjacentBombsCount === 6" class="tile-image">
+            <img src="/assets/7.png" *ngIf="this.tile.adjacentBombsCount === 7" class="tile-image">
+            <img src="/assets/8.png" *ngIf="this.tile.adjacentBombsCount === 8" class="tile-image">
+        </ng-container>
+
+        <img src="/assets/bomb.png" *ngIf="this.tile.isBomb && !this.tile.isBombClicked" class="tile-image">
+        <img src="/assets/clickedbomb.png" *ngIf="this.tile.isBombClicked" class="tile-image">
+
+    </ng-container>
 </div>

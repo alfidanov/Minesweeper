@@ -3,6 +3,16 @@
     height: 2rem;
     user-select: none;
     box-sizing: border-box;
-    background-color: lightblue;
-    border: 0.5px solid black;
+    position: relative;
+    background-color: rgb(171,171,171);
+}
+
+.tile-bombs-count {
+    position:absolute;
+}
+
+.tile-image {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
 }

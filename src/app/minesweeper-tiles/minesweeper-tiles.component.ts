@@ -21,4 +21,9 @@ export class MinesweeperTilesComponent implements OnInit {
     this.tileContainerCssClass = difficulty.toLowerCase();
     this.tiles = tiles;
   }
+
+  public rightClick(event: any, tile: Tile) {
+    tile.flag();
+    return false;
+  }
 }

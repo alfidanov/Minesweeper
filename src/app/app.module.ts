@@ -7,6 +7,7 @@ import { MinesweeperTilesComponent } from './minesweeper-tiles/minesweeper-tiles
 import { TileComponent } from './tile/tile.component';
 import { TimerComponent } from './timer/timer.component';
 import { FormatTimePipe } from './timer/format-time.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormatTimePipe } from './timer/format-time.pipe';
     FormatTimePipe
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

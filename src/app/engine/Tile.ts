@@ -1,7 +1,7 @@
 import { MinesweeperEngine } from "./MinesweeperEngine";
 
 export class Tile {
-    constructor(public x: number, public y: number, private engine: MinesweeperEngine) {
+    constructor(public x: number, public y: number, public engine: MinesweeperEngine) {
     }
 
     public isBomb: boolean;
@@ -12,7 +12,7 @@ export class Tile {
 
     public isRevealed: boolean;
 
-    public adjacentBombsCount: number = 5;
+    public adjacentBombsCount: number;
 
     public reveal() {
         this.engine.revealTile(this);

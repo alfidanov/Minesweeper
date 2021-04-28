@@ -6,14 +6,16 @@
             <button type="button" (click)="this.changeDifficulty('Junior')">Junior</button>
             <button type="button" (click)="this.changeDifficulty('Senior')">Senior</button>
             <button type="button" (click)="this.changeDifficulty('Master')">Master</button>
+            <input type="checkbox" [(ngModel)]="this.engine.debug"> Debug
 
+            <label *ngIf="this.engine.context.victory">Victory</label>
 
             <div>
-                Difficulty: {{ this.engine.difficulty }}
+                Difficulty: {{ this.engine.context.difficulty }}
             </div>
 
-            <div *ngIf="this.engine.bombs">
-                Bombs: {{ this.engine.bombs }}
+            <div *ngIf="this.engine.context.bombs">
+                Bombs: {{ this.engine.context.bombs }}
             </div>
         </div>
 
@@ -21,7 +23,7 @@
             <app-minesweeper-tiles #tilesBoard></app-minesweeper-tiles>
         </div>
         <div>
-            <app-timer [time]="this.engine.timer"></app-timer>
+            <app-timer [time]="this.engine.context.timer"></app-timer>
         </div>
     </div>
 </div>

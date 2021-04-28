@@ -1,4 +1,4 @@
-<div *ngIf="this.tile">
+<div>
     <img src="/assets/flag.png" *ngIf="this.tile.isFlagged" class="tile-image">
 
     <img src="/assets/unopened.png" *ngIf="!this.tile.isRevealed && !this.tile.isFlagged" class="tile-image">
@@ -20,4 +20,11 @@
         <img src="/assets/clickedbomb.png" *ngIf="this.tile.isBombClicked" class="tile-image">
 
     </ng-container>
+
+</div>
+
+
+<div style="position: absolute; top: 10px; left:10px;" *ngIf="this.tile.engine.debug">
+    <span *ngIf="this.tile.isBomb">B</span>
+    <span *ngIf="!this.tile.isBomb && this.tile.adjacentBombsCount">{{this.tile.adjacentBombsCount}}</span>
 </div>

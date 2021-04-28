@@ -19,7 +19,7 @@ export class MinesweeperBoardComponent implements OnInit {
     this.engine.gameStarted$.subscribe(() => {
       console.log("Board: Game started");
 
-      this.tilesBoard.drawTiles(this.engine.tiles, this.engine.difficulty);
+      this.tilesBoard.drawTiles(this.engine.context.tiles, this.engine.context.difficulty);
     })
   }
 

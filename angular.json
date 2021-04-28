@@ -3,12 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "minesweeper": {
+    "minesweeper-game": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "skipTests": true
+          "style": "scss"
         }
       },
       "root": "",
@@ -18,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/minesweeper",
+            "outputPath": "dist/minesweeper-game",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "minesweeper:build"
+            "browserTarget": "minesweeper-game:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "minesweeper:build:production"
+              "browserTarget": "minesweeper-game:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "minesweeper:build"
+            "browserTarget": "minesweeper-game:build"
           }
         },
         "test": {
@@ -114,15 +113,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "minesweeper:serve"
+            "devServerTarget": "minesweeper-game:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "minesweeper:serve:production"
+              "devServerTarget": "minesweeper-game:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "minesweeper"
+    }
+  },
+  "defaultProject": "minesweeper-game"
 }

@@ -1,0 +1,7 @@
+<div *ngIf="this.tile">
+    <span *ngIf="this.tile.isFlagged">F</span>
+
+    <div *ngIf="this.tile.isRevealed">
+        <span *ngIf="this.tile.isBomb">B</span>
+    </div>
+</div>

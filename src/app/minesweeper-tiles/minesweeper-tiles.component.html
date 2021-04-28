@@ -1,0 +1,3 @@
+<div class="tile-container {{this.tileContainerCssClass}}">
+    <app-tile *ngFor="let tile of this.tiles" [tile]="tile" class="tile" (click)="tile.reveal()"></app-tile>
+</div>

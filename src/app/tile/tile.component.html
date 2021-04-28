@@ -5,7 +5,7 @@
 
     <ng-container *ngIf="this.tile.isRevealed">
 
-        <ng-container *ngIf="!this.isBomb">
+        <ng-container *ngIf="!this.tile.isBomb">
             <img src="/assets/1.png" *ngIf="this.tile.adjacentBombsCount === 1" class="tile-image">
             <img src="/assets/2.png" *ngIf="this.tile.adjacentBombsCount === 2" class="tile-image">
             <img src="/assets/3.png" *ngIf="this.tile.adjacentBombsCount === 3" class="tile-image">
@@ -24,7 +24,7 @@
 </div>
 
 
-<div style="position: absolute; top: 10px; left:10px;" *ngIf="this.tile.engine.debug">
+<div style="position: absolute; top: 10px; left:10px;" *ngIf="isDebug()">
     <span *ngIf="this.tile.isBomb">B</span>
     <span *ngIf="!this.tile.isBomb && this.tile.adjacentBombsCount">{{this.tile.adjacentBombsCount}}</span>
 </div>

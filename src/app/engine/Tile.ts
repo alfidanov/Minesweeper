@@ -1,7 +1,7 @@
 import { MinesweeperEngine } from "./MinesweeperEngine";
 
 export class Tile {
-    constructor(public x: number, public y: number, public engine: MinesweeperEngine) {
+    constructor(public x: number, public y: number, private engine: MinesweeperEngine) {
     }
 
     public isBomb: boolean;

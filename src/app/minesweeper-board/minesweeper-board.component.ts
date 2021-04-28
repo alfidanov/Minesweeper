@@ -27,6 +27,10 @@ export class MinesweeperBoardComponent implements OnInit {
     this.engine.startGame('Junior');
   }
 
+  public changeDebug(debug) {
+    localStorage.setItem('debug', debug);
+  }
+
   public changeDifficulty(difficulty: GameDifficulty) {
     this.engine.startGame(difficulty);
   }

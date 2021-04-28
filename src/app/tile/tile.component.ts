@@ -15,4 +15,8 @@ export class TileComponent implements OnInit {
   ngOnInit() {
   }
 
+  public isDebug() {
+    return !!localStorage.getItem('debug');
+  }
+
 }

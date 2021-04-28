@@ -6,7 +6,7 @@
             <button type="button" (click)="this.changeDifficulty('Junior')">Junior</button>
             <button type="button" (click)="this.changeDifficulty('Senior')">Senior</button>
             <button type="button" (click)="this.changeDifficulty('Master')">Master</button>
-            <input type="checkbox" [(ngModel)]="this.engine.debug"> Debug
+            <input type="checkbox" (change)="this.changeDebug($event)"> Debug
 
             <label *ngIf="this.engine.context.victory">Victory</label>
 

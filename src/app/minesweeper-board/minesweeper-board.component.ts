@@ -28,7 +28,7 @@ export class MinesweeperBoardComponent implements OnInit {
   }
 
   public changeDebug(debug) {
-    localStorage.setItem('debug', debug);
+    // localStorage.setItem('debug', debug);
   }
 
   public changeDifficulty(difficulty: GameDifficulty) {

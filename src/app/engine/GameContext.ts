@@ -8,6 +8,7 @@ export class GameContext {
         this.tiles = [];
         const difficultySettings = new GameDifficultySettings();
         this.settings = difficultySettings[difficulty];
+        this.remainingFlags = this.settings.bombs;
     }
 
     public timer: number = 0;

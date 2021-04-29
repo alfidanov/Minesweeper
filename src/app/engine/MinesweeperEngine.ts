@@ -1,7 +1,6 @@
 import { Subject } from "rxjs";
 import { GameContext } from "./GameContext";
 import { GameDifficulty } from "./GameDifficulty";
-import { GameDifficultySettings } from "./GameDifficultySettings";
 import { MainPositions, Positions } from "./Position";
 import { Tile } from "./Tile";
 import { getRandomInt } from "./utils";
@@ -55,7 +54,19 @@ export class MinesweeperEngine {
 
         this.startTimer();
 
-        tile.isFlagged = !tile.isFlagged;
+        if (!tile.isFlagged && this.context.remainingFlags === 0) {
+            return;
+        }
+
+        if (tile.isFlagged) {
+            tile.isFlagged = false;
+            this.context.remainingFlags++;
+        }
+        else {
+            tile.isFlagged = true;
+            this.context.remainingFlags--;
+        }
+
         this.checkWinCondition();
     }
 

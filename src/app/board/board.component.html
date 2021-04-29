@@ -6,7 +6,7 @@
             <button type="button" (click)="this.changeDifficulty('Junior')">Junior</button>
             <button type="button" (click)="this.changeDifficulty('Senior')">Senior</button>
             <button type="button" (click)="this.changeDifficulty('Master')">Master</button>
-            <input type="checkbox" (change)="this.changeDebug($event)"> Debug
+            <input type="checkbox" #debugElement (change)="this.changeDebug(debugElement.checked)"> Debug
 
             <label *ngIf="this.engine.context.victory">Victory</label>
 
@@ -20,7 +20,7 @@
         </div>
 
         <div style="display: flex; justify-content: center;">
-            <app-minesweeper-tiles #tilesBoard></app-minesweeper-tiles>
+            <tile-panel #tilesBoard></tile-panel>
         </div>
         <div>
             <app-timer [time]="this.engine.context.timer"></app-timer>

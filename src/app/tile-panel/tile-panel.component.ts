@@ -3,11 +3,11 @@ import { GameDifficulty } from '../engine/GameDifficulty';
 import { Tile } from '../engine/Tile';
 
 @Component({
-  selector: 'app-minesweeper-tiles',
-  templateUrl: './minesweeper-tiles.component.html',
-  styleUrls: ['./minesweeper-tiles.component.scss']
+  selector: 'tile-panel',
+  templateUrl: './tile-panel.component.html',
+  styleUrls: ['./tile-panel.component.scss']
 })
-export class MinesweeperTilesComponent implements OnInit {
+export class TilePanelComponent implements OnInit {
 
   constructor() { }
 

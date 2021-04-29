@@ -17,10 +17,11 @@ export class MinesweeperEngine {
     }
 
     public gameStarted$ = new Subject();
+    public gameCompleted$ = new Subject<boolean>();
 
     public startGame(difficulty: GameDifficulty) {
         this.context = new GameContext(difficulty)
-        this.reset();
+        this.stopTimer();
         this.setupGame(difficulty);
         this.gameStarted$.next();
     }
@@ -58,27 +59,20 @@ export class MinesweeperEngine {
         this.checkWinCondition();
     }
 
-    private reset() {
-        this.stopTimer();
-    }
-
     private setupGame(difficulty: GameDifficulty) {
         console.log(`Starting Game | ${difficulty}`)
-        const difficultySettings = new GameDifficultySettings();
-        const settings = difficultySettings[difficulty];
 
-        for (let y = 0; y < settings.y; y++) {
-            for (let x = 0; x < settings.x; x++) {
+        for (let y = 0; y < this.context.settings.y; y++) {
+            for (let x = 0; x < this.context.settings.x; x++) {
                 const tile = new Tile(x, y, this);
                 this.context.tiles.push(tile);
                 this.context.tilesMap.set(this.getTileKey(x, y), tile);
             }
         }
 
-        this.context.tilesBoard = { x: settings.x, y: settings.y };
-        this.context.bombs = settings.bombs;
+        this.context.bombs = this.context.settings.bombs;
 
-        this.placeMines(settings.bombs, settings.x, settings.y);
+        this.placeMines(this.context.settings.bombs, this.context.settings.x, this.context.settings.y);
     }
 
     private gameOver() {
@@ -91,6 +85,8 @@ export class MinesweeperEngine {
             }
         });
         this.stopTimer();
+
+        this.gameCompleted$.next(false);
     }
 
     private placeMines(bombsCount: number, maxX: number, maxY: number) {
@@ -217,19 +213,12 @@ export class MinesweeperEngine {
     }
 
     private checkWinCondition() {
-        const unflaggedMine = this.context.tiles.find(x => x.isBomb && !x.isFlagged);
-        if (!unflaggedMine) {
-            this.context.victory = true;
-            this.stopTimer();
-            return true;
-        }
-
         const unopenedTiles = this.context.tiles.find(x => !x.isBomb && !x.isRevealed);
         if (!unopenedTiles) {
             this.context.victory = true;
             this.stopTimer();
+            this.gameCompleted$.next(true);
             return true;
         }
-
     }
 }

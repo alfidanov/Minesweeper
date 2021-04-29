@@ -16,7 +16,7 @@ export class TileComponent implements OnInit {
   }
 
   public isDebug() {
-    return !!localStorage.getItem('msw-debug');
+    const isdebug = localStorage.getItem('msw-debug') === 'true';
+    return isdebug;
   }
-
 }

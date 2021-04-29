@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MinesweeperTilesComponent } from '../minesweeper-tiles/minesweeper-tiles.component';
+import { TilePanelComponent } from '../tile-panel/tile-panel.component';
 import { GameDifficulty } from '../engine/GameDifficulty';
 import { MinesweeperEngine } from '../engine/MinesweeperEngine';
 
 
 @Component({
-  selector: 'app-minesweeper-board',
-  templateUrl: './minesweeper-board.component.html',
-  styleUrls: ['./minesweeper-board.component.scss']
+  selector: 'board',
+  templateUrl: './board.component.html',
+  styleUrls: ['./board.component.scss']
 })
-export class MinesweeperBoardComponent implements OnInit {
+export class BoardComponent implements OnInit {
 
-  @ViewChild(MinesweeperTilesComponent, { static: true }) tilesBoard: MinesweeperTilesComponent;
+  @ViewChild(TilePanelComponent, { static: true }) tilesBoard: TilePanelComponent;
 
   public engine: MinesweeperEngine = new MinesweeperEngine();
 

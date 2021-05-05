@@ -1,0 +1,30 @@
+<div class="board">
+
+    <div class="u-df-column">
+
+        <div class="btn-group btn-primary u-mb10">
+            <button type="button" class="btn" (click)="this.changeDifficulty('Junior')">Junior</button>
+            <button type="button" class="btn" (click)="this.changeDifficulty('Senior')">Senior</button>
+            <button type="button" class="btn" (click)="this.changeDifficulty('Master')">Master</button>
+        </div>
+
+        <div class="u-df-column u-ai-c">
+
+            <div class="ms-top-panel u-df-row u-jc-sb">
+                <div class="ms-top-status-bar">
+                    <div class="ms-remaining-flags">
+                        {{ this.engine.context.remainingFlags }}
+                    </div>
+                    <div class="u-m5" (click)="this.startNewGame()">
+                        <div class="ms-face ms-sad-face" *ngIf="this.engine.context.isGameOver"></div>
+                        <div class="ms-face ms-happy-face" *ngIf="!this.engine.context.isGameOver"></div>
+                    </div>
+
+                    <ms-timer [time]="this.engine.context.timer"></ms-timer>
+                </div>
+            </div>
+
+            <ms-tile-panel #tilesBoard></ms-tile-panel>
+        </div>
+    </div>
+</div>

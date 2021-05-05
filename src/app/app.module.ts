@@ -2,21 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { BoardComponent } from './board/board.component';
-import { TilePanelComponent } from './tile-panel/tile-panel.component';
-import { TileComponent } from './tile/tile.component';
-import { TimerComponent } from './timer/timer.component';
-import { FormatTimePipe } from './timer/format-time.pipe';
 import { FormsModule } from '@angular/forms';
+import { MsBoardComponent } from './ms-board/ms-board.component';
+import { MsTilePanelComponent } from './ms-tile-panel/ms-tile-panel.component';
+import { MsTileComponent } from './ms-tile/ms-tile.component';
+import { MsTimerComponent } from './ms-timer/ms-timer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardComponent,
-    TilePanelComponent,
-    TileComponent,
-    TimerComponent,
-    FormatTimePipe
+    MsBoardComponent,
+    MsTilePanelComponent,
+    MsTileComponent,
+    MsTimerComponent
   ],
   imports: [
     BrowserModule,

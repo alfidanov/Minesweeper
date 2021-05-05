@@ -8,9 +8,8 @@ import { getRandomInt } from "./utils";
 export class MinesweeperEngine {
 
     private interval: any;
-    private isRunning: boolean;
 
-    public context: GameContext;
+    public context: GameContext = new GameContext('Junior');
 
     constructor() {
     }
@@ -30,25 +29,44 @@ export class MinesweeperEngine {
             return;
         }
 
+        if (!this.context.bombsPlaced) {
+            this.placeMines(this.context.settings.bombs, this.context.settings.x, this.context.settings.y, tile);
+            this.context.bombsPlaced = true;
+        }
+
+        this.startTimer();
+
         if (tile.isFlagged) {
             return;
         }
 
         if (tile.isBomb) {
-            tile.isRevealed = true;
-            tile.isBombClicked = true;
+            tile.setRevealed(true);
             this.gameOver();
             return;
         }
 
-        this.startTimer();
-
         this.revealTileInternal(tile);
+        this.revealObviousTiles();
         this.checkWinCondition();
     }
 
+    public revealAdjacentIfFlagged(tile: Tile) {
+        if (!tile.isRevealed) {
+            return;
+        }
+        const adjTiles = this.findAdjacentTiles(tile, Positions);
+        const adjFlagged = adjTiles.filter(x => !x.isRevealed && x.isFlagged);
+        const adjUnrevealed = adjTiles.filter(x => !x.isRevealed && !x.isFlagged);
+        if (adjFlagged.length === tile.adjacentBombsCount) {
+            adjUnrevealed.forEach(adjT => {
+                this.revealTile(adjT);
+            })
+        }
+    }
+
     public flagTile(tile: Tile) {
-        if (this.context.isGameOver || this.context.victory) {
+        if (tile.isRevealed) {
             return;
         }
 
@@ -59,11 +77,11 @@ export class MinesweeperEngine {
         }
 
         if (tile.isFlagged) {
-            tile.isFlagged = false;
+            tile.setFlagged(false);
             this.context.remainingFlags++;
         }
         else {
-            tile.isFlagged = true;
+            tile.setFlagged(true);
             this.context.remainingFlags--;
         }
 
@@ -82,8 +100,6 @@ export class MinesweeperEngine {
         }
 
         this.context.bombs = this.context.settings.bombs;
-
-        this.placeMines(this.context.settings.bombs, this.context.settings.x, this.context.settings.y);
     }
 
     private gameOver() {
@@ -91,8 +107,8 @@ export class MinesweeperEngine {
         this.context.isGameOver = true;
 
         this.context.tiles.forEach(x => {
-            if (x.isBomb) {
-                x.isRevealed = true;
+            if (x.isBomb && !x.isRevealed) {
+                x.setRevealed();
             }
         });
         this.stopTimer();
@@ -100,7 +116,7 @@ export class MinesweeperEngine {
         this.gameCompleted$.next(false);
     }
 
-    private placeMines(bombsCount: number, maxX: number, maxY: number) {
+    private placeMines(bombsCount: number, maxX: number, maxY: number, exceptTile: Tile) {
 
         const randomizeMinesFunc = () => {
             let bombsRemaining = bombsCount;
@@ -116,8 +132,7 @@ export class MinesweeperEngine {
                 const y = getRandomInt(0, maxY);
 
                 const tileKey = this.getTileKey(x, y);
-
-                if (!bombsMap.get(tileKey)) {
+                if (exceptTile.x !== x && exceptTile.y !== y && !bombsMap.get(tileKey)) {
                     bombsMap.set(tileKey, true);
                     bombsRemaining--;
                 }
@@ -145,11 +160,11 @@ export class MinesweeperEngine {
     }
 
     private startTimer() {
-        if (this.isRunning) {
+        if (this.context.isRunning) {
             return;
         }
 
-        this.isRunning = true;
+        this.context.isRunning = true;
         this.interval = setInterval(() => {
             this.context.timer++;
         }, 1000);
@@ -210,17 +225,41 @@ export class MinesweeperEngine {
         return result;
     }
 
+    private findAdjacentTiles(tile: Tile, positions: string[]) {
+        const adjacentTiles: Tile[] = [];
+
+        positions.forEach(p => {
+            const adjTile = this.getRelativeTile(tile, p);
+            if (adjTile) {
+                adjacentTiles.push(adjTile);
+            }
+        })
+        return adjacentTiles;
+    }
+
     private revealTileInternal(tile: Tile) {
-        tile.isRevealed = true;
+        tile.setRevealed();
 
         if (tile.adjacentBombsCount === 0) {
-            MainPositions.forEach(p => {
-                const adjTile = this.getRelativeTile(tile, p);
+
+            this.findAdjacentTiles(tile, MainPositions).forEach(adjTile => {
                 if (adjTile && !adjTile.isRevealed && !adjTile.isFlagged) {
                     this.revealTileInternal(adjTile);
                 }
             })
         }
+    }
+
+    private revealObviousTiles() {
+        const revealedEmptyTiles = this.context.tiles.filter(x => x.isRevealed && x.adjacentBombsCount === 0);
+        revealedEmptyTiles.forEach(t => {
+            Positions.forEach(p => {
+                var adjTile = this.getRelativeTile(t, p);
+                if (adjTile && !adjTile.isRevealed && adjTile.adjacentBombsCount > 0) {
+                    adjTile.setRevealed();
+                }
+            })
+        })
     }
 
     private checkWinCondition() {

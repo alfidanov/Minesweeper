@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TilePanelComponent } from '../tile-panel/tile-panel.component';
 import { GameDifficulty } from '../engine/GameDifficulty';
 import { MinesweeperEngine } from '../engine/MinesweeperEngine';
-
+import { MsTilePanelComponent } from '../ms-tile-panel/ms-tile-panel.component';
 
 @Component({
-  selector: 'board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  selector: 'ms-board',
+  templateUrl: './ms-board.component.html',
+  styleUrls: ['./ms-board.component.scss']
 })
-export class BoardComponent implements OnInit {
+export class MsBoardComponent implements OnInit {
 
-  @ViewChild(TilePanelComponent, { static: true }) tilesBoard: TilePanelComponent;
+  @ViewChild(MsTilePanelComponent, { static: true }) tilesBoard: MsTilePanelComponent;
 
   public engine: MinesweeperEngine = new MinesweeperEngine();
+  private lastDifficulty: GameDifficulty = 'Junior';
 
   constructor() {
     this.engine.gameStarted$.subscribe(() => {
@@ -24,7 +24,13 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.engine.startGame('Junior');
+    setTimeout(() => {
+      this.engine.startGame(this.lastDifficulty);
+    })
+  }
+
+  public startNewGame() {
+    this.engine.startGame(this.lastDifficulty)
   }
 
   public changeDebug(debug) {
@@ -32,6 +38,9 @@ export class BoardComponent implements OnInit {
   }
 
   public changeDifficulty(difficulty: GameDifficulty) {
-    this.engine.startGame(difficulty);
+    this.lastDifficulty = difficulty;
+    this.engine.startGame(this.lastDifficulty);
   }
+
 }
+

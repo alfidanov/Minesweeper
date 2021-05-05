@@ -3,11 +3,11 @@ import { GameDifficulty } from '../engine/GameDifficulty';
 import { Tile } from '../engine/Tile';
 
 @Component({
-  selector: 'tile-panel',
-  templateUrl: './tile-panel.component.html',
-  styleUrls: ['./tile-panel.component.scss']
+  selector: 'ms-tile-panel',
+  templateUrl: './ms-tile-panel.component.html',
+  styleUrls: ['./ms-tile-panel.component.scss']
 })
-export class TilePanelComponent implements OnInit {
+export class MsTilePanelComponent implements OnInit {
 
   constructor() { }
 
@@ -20,10 +20,5 @@ export class TilePanelComponent implements OnInit {
   public drawTiles(tiles: Tile[], difficulty: GameDifficulty) {
     this.tileContainerCssClass = difficulty.toLowerCase();
     this.tiles = tiles;
-  }
-
-  public rightClick(event: any, tile: Tile) {
-    tile.flag();
-    return false;
   }
 }

@@ -1,16 +1,22 @@
 import { MinesweeperEngine } from "./MinesweeperEngine";
 
+type TileState = 'one' | 'two' | 'three' | 'four' | 'five' | 'six' | 'seven' | 'eight' | 'flag' | 'bomb' | 'clickedbomb' | 'unopened' | '';
+const Numbers = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
+
 export class Tile {
+
     constructor(public x: number, public y: number, private engine: MinesweeperEngine) {
     }
 
     public isBomb: boolean;
 
-    public isBombClicked: boolean;
+    public get isFlagged() {
+        return this.state === 'flag';
+    }
 
-    public isFlagged: boolean;
-
-    public isRevealed: boolean;
+    public get isRevealed() {
+        return this.state !== 'flag' && this.state !== 'unopened';
+    }
 
     public adjacentBombsCount: number;
 
@@ -18,30 +24,29 @@ export class Tile {
         this.engine.revealTile(this);
     }
 
+    public revealAdjacentIfFlagged() {
+        this.engine.revealAdjacentIfFlagged(this);
+    }
+
     public flag() {
         this.engine.flagTile(this);
     }
 
-    public get image() {
-        if (this.isFlagged) {
-            return 'flag';
+    public setRevealed(userClick = false) {
+        if (this.isBomb) {
+            this.state = userClick ? 'clickedbomb' : 'bomb';
+        } else {
+            this.state = this.adjacentBombsCount > 0 ? <TileState>Numbers[this.adjacentBombsCount] : '';
         }
-
-        if (this.isBombClicked) {
-            return 'clickedBomb';
-        }
-
-        if (this.isBomb && this.isRevealed) {
-            return 'bomb';
-        }
-
-        if (!this.isRevealed) {
-            return 'unopened';
-        }
-
-        if (this.adjacentBombsCount > 0) {
-            return String(this.adjacentBombsCount);
-        }
-        return null;
     }
+
+    public setFlagged(isFlagged: boolean) {
+        if (isFlagged) {
+            this.state = 'flag';
+        } else {
+            this.state = 'unopened';
+        }
+    }
+
+    public state: TileState = 'unopened';
 }
